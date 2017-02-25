@@ -1,0 +1,103 @@
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/underscorejs/1.8.3/underscore-min.js"></script>
+</head>
+
+<body>
+<div class="container">
+  <h1>Amar Weekly Gains Visualization</h1>
+  <span> Data from: </span><span id=date></span>
+  <br><br>
+  <h2>Exhibit A</h2>
+  <hr>
+  <div class="main">
+    <h2>Guild Comparison</h2>
+        <canvas id="myChart"></canvas>
+    <br><br>
+    <h3>Reduce Combat by :<h3>
+        <select id="combatreduce">
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3" selected="selected">3 (default)</option>
+            <option value="2">2</option>
+            <option value="1">none</option>
+        </select>
+        <!-- <label for="month"></label> -->
+        <h3>Select Guild:<h3>
+        <input type="text" id="UserInput" name="UserInput" value="(cone?)|(Legacy)|(-PoD-)|(Slumber)"/> <button type="button" id="GO">Go!</button>
+        <br>
+        <span>Choose one or more guilds with "<b>(cone?)|(-PoD-)|(Slumber)</b>" You can also specify "<b>all</b>"</span>
+    <br><br>
+    
+    <!--<h3>Select Chart Style:<h3>
+        <select id="chartStyle">
+            <option value="line">Line</option>
+            <option value="radar">Radar</option>
+            <option value="bar">Bar</option>
+        </select>-->
+    <br><br><br>
+
+    <h2>Exhibit B</h2>
+    <hr>
+    <h2>Experimental - Chart of all forms</h2>
+    <input type="text" id="allInput" value="(cone?)"/> <button type="button" id="allButton">Go!</button><br>
+    <span>Takes all forms of user input and builds charts. Look at an entire guild with "(cone?)". Spelling matters</span><br>
+    <span><b>Example Inputs:</b></span><br>
+    <span>(cone?)|(Legacy)</span><br>
+    <span>Character1|Character2|Character3</span><br>
+    <span>Character1</span>
+    <br>
+    <canvas id="all-Chart"></canvas>
+
+    <!-- OLD
+    <h2>Exhibit C</h2>
+    <hr/>
+    <h2>Experimental - Chart of the moment</h2>
+    <input type="text" id="characterInput" value="(cone?)"/> <button type="button" id="CharacterButton">Go!</button><br>
+    <span>Compare two or more characters with "Name1|Name2|Name3" or an entire guild "(goose)". Spelling and capitalization matter</span>
+    <br>
+    <canvas id="character-Chart"></canvas>
+    -->
+
+    <h3>FAQ</h3>
+    <hr>
+    <h4>How often is this data updated?</h4>
+    <p>Will try to update the data each Sunday and Wednesday, since I have to copy-paste everything by hand thanks to arbitrary rules.</p>
+    <br>
+    <h4>This didn't count everyone</h4>
+    <p>Sorry this only knows about guilds who appear on the <b>weekly gains pages</b>. Maybe the forthcoming API will solve this. Please ensure someone in your guild hits the top 100 in at least one skill category.</p>
+    <br>
+    <h4>Why?</h4>
+    <p>I don't do much except for botcheck and chat sometimes. I wanted to see how my guild was doing compared to others and visualize my contribution.</p>
+    <br>
+    <h4>Technical Details</h4>
+    <p>Started off as a Javascript project to give myself some async practice outside of Node. However things rapidly got out of control and I decided to pick up Typescript to deal with the lack of classes and get the data organised.</p>
+    <br><br>
+    <br><br>
+  </div>
+
+  
+  <div class="sidebar sticky">
+    <h3>Experimental Value for Value Model</h3>
+    <a href="http://paypal.me/chunjee"><img src="value.png" alt="" /></a>
+    <p>Yo, I spent more than a couple days on this. Consider sending me some cash value if you got thought this was worthwhile to you.</p>
+    <p>Also the best way to say you want to see more features!</p>
+    <br><br>
+    <h3>Next Feature:</h5>
+    
+    <h5>Compare two characters</h5>
+    <canvas id="progressChart1"></canvas>
+    <br>
+    <h5>Weighted Scores</h5>
+    <canvas id="progressChart2"></canvas>
+  </div>
+</div>
+<div class="word">Made with <b><i class="fa fa-keyboard-o" aria-hidden="true"></i></b> by <a href="https://twitter.com/chunjee">Chunjee</a></div>
+</body>
+<script src="./js.js"></script>
+<script src="./new.js"></script>
+
+</div>
