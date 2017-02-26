@@ -444,6 +444,7 @@ function Fn_Main(para_ExternalData) {
     //trim any datasets that are too short to be real json
     var json = "" + AllData[i]; //"" ensures string
         if(json.length < 12) {
+            console.log(json);
             AllData.pop(); //THIS ONLY WORKS BECAUSE BLANK LINE IS ALWAYS LAST.
             console.log("Data trimmed to " + AllData.length + " sets of json. (hint: should be 12)")
             continue; //skip blank lines
