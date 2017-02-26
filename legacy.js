@@ -402,7 +402,7 @@ function fn_GetAllGuildMembers(para_InputJSON,para_GuildName) {
 //MAIN
 function Fn_Main(para_ExternalData) {
     //split the file into each JSON section. separated by /newline
-    AllData = fn_Splitfile(para_ExternalData, "\r\n");
+    AllData = fn_Splitfile(para_ExternalData, "\n");
     console.log("Lines in datafile : " + AllData.length);
     //iterate over each highscore page
     for (var i = AllData.length - 1; i >= 0; i--) {
