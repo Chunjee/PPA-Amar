@@ -254,8 +254,8 @@ $(document).ready((function() {
 
 var Fn_TSMain = function(para_data:any) {
     //split the file into each JSON section. separated by /newline
-  AllData = fn_Splitfile(para_data , "\r\n");
-  console.log("Lines in datafile : " + AllData.length);
+    AllData = fn_Splitfile(para_data , "\n");
+    console.log("Lines in datafile : " + AllData.length);
   
   
     //iterate over each highscore page
