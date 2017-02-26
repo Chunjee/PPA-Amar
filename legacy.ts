@@ -438,15 +438,13 @@ function Fn_Main(para_ExternalData) {
   console.log("Lines in datafile : " + AllData.length);
   
   
-  //iterate over each highscore page
+    //iterate over each highscore page
     for (var i = AllData.length - 1; i >= 0; i--) {
-
-    //trim any datasets that are too short to be real json
-    var json = "" + AllData[i]; //"" ensures string
+        //trim any datasets that are too short to be real json
+        var json = "" + AllData[i];
         if(json.length < 12) {
             AllData.pop(); //THIS ONLY WORKS BECAUSE BLANK LINE IS ALWAYS LAST.
             console.log("Data trimmed to " + AllData.length + " sets of json. (hint: should be 12)")
-            console.log(AllData);
             continue; //skip blank lines
         }
     }
