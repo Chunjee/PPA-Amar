@@ -235,7 +235,7 @@ $(document).ready((function() {
 
     //request json data from separate page
     var req = {
-        url: "/data.json",
+        url: "/PPA-Amar/data.json",
         beforeSend: function( xhr ) {
         xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
         }
