@@ -207,12 +207,14 @@ $(document).ready((function () {
         //console.log(typeof(AllChart.config.data.datasets));
     });
     //request json data from separate page
-    $.ajax({
-        url: "/PPA-Amar/data.json",
+    var req = {
+        url: "/data.json",
         beforeSend: function (xhr) {
             xhr.overrideMimeType("text/plain; charset=x-user-defined");
         }
-    })
+    };
+    console.log(req);
+    $.ajax(req)
         .done(function (data) {
         //Send Data to Main
         console.log("main started");
