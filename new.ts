@@ -87,7 +87,63 @@ $(document).ready((function() {
     "use strict";
 
     //Register buttons with functionality
-    $("#allButton").on( "click", function() {
+    $("#allButton").on( "click", fn_AllChart);
+
+    //request json data from separate page
+    var req = {
+        url: "./data.json",
+        beforeSend: function( xhr ) {
+        xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
+        }
+    }
+    console.log(req);
+
+    $.ajax(req)
+    .done(function( data ) {
+        //Send Data to Main
+        console.log("main started");
+        Fn_Main(data); //Old Main
+        Fn_TSMain(data);
+
+        //Build AllChart with default input
+        fn_AllChart();
+    });
+}));
+
+
+var Fn_TSMain = function(para_data:any) {
+    //split the file into each JSON section. separated by /newline
+    AllData = fn_Splitfile(para_data , "\n");
+    console.log("Lines in datafile : " + AllData.length);
+  
+  
+    //iterate over each highscore page
+    for (var i = AllData.length - 1; i >= 0; i--) {
+        //trim any datasets that are too short to be real json
+        var json = "" + AllData[i];
+        if(json.length < 12) {
+            AllData.pop(); //THIS ONLY WORKS BECAUSE BLANK LINE IS ALWAYS LAST.
+            console.log("Data trimmed to " + AllData.length + " sets of json. (hint: should be 12)")
+            continue; //skip blank lines
+        }
+    }
+
+    //var the_guilds:string[] = fn_ParseAllGuildNames(AllData);
+    var the_characters:string[] = fn_ParseAllCharacterNames(AllData);
+
+    the_charactersobject = fn_ParseAllCharacters(AllData);
+
+    //loop each character and total their skills into the ._total attribute
+    for (var character of the_charactersobject) {
+        character.FindTotal();
+    }
+    //Sort characters from smallest to largest
+    the_charactersobject = _.sortBy(the_charactersobject, "_total");
+}
+
+
+
+var fn_AllChart = function () {
         //grab users input
         var delimiter = "|"
         var userInput = $("#allInput").val() + delimiter;
@@ -230,58 +286,8 @@ $(document).ready((function() {
             });
         }  
         //console.log(typeof(AllChart.config.data.datasets));
-    });
-
-
-    //request json data from separate page
-    var req = {
-        url: "./data.json",
-        beforeSend: function( xhr ) {
-        xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
-        }
     }
-    console.log(req);
-
-    $.ajax(req)
-    .done(function( data ) {
-        //Send Data to Main
-        console.log("main started");
-        Fn_Main(data); //Old Main
-        Fn_TSMain(data);
-    });
-}));
-
-
-var Fn_TSMain = function(para_data:any) {
-    //split the file into each JSON section. separated by /newline
-    AllData = fn_Splitfile(para_data , "\n");
-    console.log("Lines in datafile : " + AllData.length);
-  
-  
-    //iterate over each highscore page
-    for (var i = AllData.length - 1; i >= 0; i--) {
-        //trim any datasets that are too short to be real json
-        var json = "" + AllData[i];
-        if(json.length < 12) {
-            AllData.pop(); //THIS ONLY WORKS BECAUSE BLANK LINE IS ALWAYS LAST.
-            console.log("Data trimmed to " + AllData.length + " sets of json. (hint: should be 12)")
-            continue; //skip blank lines
-        }
-    }
-
-    //var the_guilds:string[] = fn_ParseAllGuildNames(AllData);
-    var the_characters:string[] = fn_ParseAllCharacterNames(AllData);
-
-    the_charactersobject = fn_ParseAllCharacters(AllData);
-
-    //loop each character and total their skills into the ._total attribute
-    for (var character of the_charactersobject) {
-        character.FindTotal();
-    }
-    //Sort characters from smallest to largest
-    the_charactersobject = _.sortBy(the_charactersobject, "_total");
 }
-
 
 
 
