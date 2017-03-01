@@ -56,7 +56,6 @@ class Character {
         this._total += this._tailoring;
         this._total += this._woodcutting;
     }
-
 } 
 
 
@@ -82,7 +81,9 @@ interface Window {
     var tailoringArray = [];
     var woodcuttingArray = [];
 
-// -------------- { MAIN } -----------------
+
+
+// -------------- { MAIN } ----------------- //
 $(document).ready((function() {
     "use strict";
 
@@ -111,9 +112,13 @@ $(document).ready((function() {
 }));
 
 
+
+// -------------- { TOP FUNCTIONS } ----------------- //
+
+//Accepts JSON data and sends it to all relevent functions
 var Fn_TSMain = function(para_data:any) {
     //split the file into each JSON section. separated by /newline
-    AllData = fn_Splitfile(para_data , "\n");
+    AllData = fn_SplitString(para_data , "\n");
     console.log("Lines in datafile : " + AllData.length);
   
   
@@ -142,158 +147,168 @@ var Fn_TSMain = function(para_data:any) {
 }
 
 
+//Accepts user input for ALLCHART
+var fn_AllChart = function() {
+    //grab users input
+    var delimiter = "|"
+    var userInput = $("#allInput").val() + delimiter;
+    console.log("User entered: " + userInput);
+    //lowercase user input for less friction
+    userInput = userInput.toLowerCase();
+    
+    //Split up user input into an array
+    var userinput_array = fn_SplitString(userInput , delimiter);
 
-var fn_AllChart = function () {
-        //grab users input
-        var delimiter = "|"
-        var userInput = $("#allInput").val() + delimiter;
-        console.log("User entered: " + userInput);
-        //lowercase user input for less friction
-        userInput = userInput.toLowerCase();
-        
-        //Split up user input into an array
-        var userinput_array = fn_Splitfile(userInput , delimiter);
 
-
-        var thisSet:Character[] = [];
-        labels = [];
-        //GUILD handling //var myRegEx = /\(/g;
-        if (fn_InStr(userInput,"(")) {
-            for (var guild of userinput_array) {
-                for (var character of the_charactersobject) {
-                    if (guild.indexOf(character._guild) !== -1) {
-                        labels.push(character._displayName);
-                        thisSet.push(character);
-                    }
+    var thisSet:Character[] = [];
+    labels = [];
+    //GUILD handling //var myRegEx = /\(/g;
+    if (fn_InStr(userInput,"(")) {
+        for (var guild of userinput_array) {
+            for (var character of the_charactersobject) {
+                if (guild.indexOf(character._guild) !== -1) {
+                    labels.push(character._displayName);
+                    thisSet.push(character);
                 }
-            }   
-        } else {
-            for (var value of userinput_array) {
-                for (var character of the_charactersobject) {
-                    if (value.indexOf(character._name) !== -1) {
-                        labels.push(character._displayName);
-                        thisSet.push(character);
-                    }
+            }
+        }   
+    } else {
+        for (var value of userinput_array) {
+            for (var character of the_charactersobject) {
+                if (value.indexOf(character._name) !== -1) {
+                    labels.push(character._displayName);
+                    thisSet.push(character);
                 }
             }
         }
-        
-        //build each set of data
-        alchemyArray = [], carpentryArray = [], combatArray = [], cookingArray = [], fishingArray = [], gatheringArray = [];
-        magicArray = [], miningArray = [], smithingArray = [], speedArray = [], tailoringArray =[], woodcuttingArray =[];
-        for (var character of thisSet) {
-            alchemyArray.push(character._alchemy);
-            carpentryArray.push(character._carpentry);
-            combatArray.push(character._combat);
-            cookingArray.push(character._cooking);
-            fishingArray.push(character._fishing);
-            gatheringArray.push(character._gathering);
-            magicArray.push(character._magic);
-            miningArray.push(character._mining);
-            smithingArray.push(character._smithing);
-            speedArray.push(character._speed);
-            tailoringArray.push(character._tailoring);
-            woodcuttingArray.push(character._woodcutting);
-
-            //add all data to the combined dataSets
-            dataSets.push(alchemyArray,carpentryArray,combatArray,cookingArray);
-        }
-
-        //set chart data
-        var ctx = document.getElementById("all-Chart");
-        var data = {
-            labels: labels,
-            datasets: [{
-                label: "Magic",
-                backgroundColor: "rgb(125, 47, 198)",
-                borderColor: "rgb(125, 47, 198)",
-                data: magicArray
-                },{
-                label: "Alchemy",
-                backgroundColor: "rgb(47, 198, 183)",
-                borderColor: "rgb(47, 198, 183)",
-                data: alchemyArray
-                }, {
-                label: "Carpentry",
-                backgroundColor: "rgb(198, 165, 47)",
-                borderColor: "rgb(198, 165, 47)",
-                data: carpentryArray
-                }, {
-                label: "Combat",
-                backgroundColor: "rgb(99, 0, 0)",
-                borderColor: "rgb(99, 0, 0)",
-                data: combatArray
-                }, {
-                label: "Cooking",
-                backgroundColor: "rgb(195, 198, 47)",
-                borderColor: "rgb(195, 198, 47)",
-                data: cookingArray
-                }, {
-                label: "Fishing",
-                backgroundColor: "rgb(47, 117, 198)",
-                borderColor: "rgb(47, 117, 198)",
-                data: fishingArray
-                }, {
-                label: "Gathering",
-                backgroundColor: "rgb(162, 198, 47)",
-                borderColor: "rgb(162, 198, 47)",
-                data: gatheringArray
-                }, {
-                label: "Mining",
-                backgroundColor: "rgb(109, 109, 109)",
-                borderColor: "rgb(109, 109, 109)",
-                data: miningArray
-                }, {
-                label: "Smithing",
-                backgroundColor: "rgb(40, 40, 40)",
-                borderColor: "rgb(40, 40, 40)",
-                data: smithingArray
-                }, {
-                label: "Speed",
-                backgroundColor: "rgb(198, 47, 67)",
-                borderColor: "rgb(198, 47, 67)",
-                data: speedArray
-                }, {
-                label: "Tailoring",
-                backgroundColor: "rgb(198, 117, 47)",
-                borderColor: "rgb(198, 117, 47)",
-                data: tailoringArray
-                }, {
-                label: "Woodcutting",
-                backgroundColor: "rgb(102, 56, 16)",
-                borderColor: "rgb(102, 56, 16)",
-                data: woodcuttingArray
-                }
-            ]
-        };
-        console.log(typeof(AllChart) );
-
-        //update chart data if already created
-        if (typeof(AllChart) == "object") {
-            console.log("ALF!!!")
-            AllChart.config.data  = data;
-            AllChart.update();
-        } else {
-            AllChart = new Chart(ctx, {
-                type: 'bar',
-                data: data,
-                options: {
-                    scales: {
-                        xAxes: [{stacked: true, ticks: {autoSkip: false}}],
-                        yAxes: [{stacked: true}]
-                    }
-                }
-            });
-        }  
-        //console.log(typeof(AllChart.config.data.datasets));
     }
+    
+    //build each set of data
+    alchemyArray = [], carpentryArray = [], combatArray = [], cookingArray = [], fishingArray = [], gatheringArray = [];
+    magicArray = [], miningArray = [], smithingArray = [], speedArray = [], tailoringArray =[], woodcuttingArray =[];
+    for (var character of thisSet) {
+        alchemyArray.push(character._alchemy);
+        carpentryArray.push(character._carpentry);
+        combatArray.push(character._combat);
+        cookingArray.push(character._cooking);
+        fishingArray.push(character._fishing);
+        gatheringArray.push(character._gathering);
+        magicArray.push(character._magic);
+        miningArray.push(character._mining);
+        smithingArray.push(character._smithing);
+        speedArray.push(character._speed);
+        tailoringArray.push(character._tailoring);
+        woodcuttingArray.push(character._woodcutting);
+
+        //add all data to the combined dataSets
+        dataSets.push(alchemyArray,carpentryArray,combatArray,cookingArray);
+    }
+
+    //set chart data
+    var ctx = document.getElementById("all-Chart");
+    var data = {
+        labels: labels,
+        datasets: [{
+            label: "Magic",
+            backgroundColor: "rgb(125, 47, 198)",
+            borderColor: "rgb(125, 47, 198)",
+            data: magicArray
+            },{
+            label: "Alchemy",
+            backgroundColor: "rgb(47, 198, 183)",
+            borderColor: "rgb(47, 198, 183)",
+            data: alchemyArray
+            }, {
+            label: "Carpentry",
+            backgroundColor: "rgb(198, 165, 47)",
+            borderColor: "rgb(198, 165, 47)",
+            data: carpentryArray
+            }, {
+            label: "Combat",
+            backgroundColor: "rgb(99, 0, 0)",
+            borderColor: "rgb(99, 0, 0)",
+            data: combatArray
+            }, {
+            label: "Cooking",
+            backgroundColor: "rgb(195, 198, 47)",
+            borderColor: "rgb(195, 198, 47)",
+            data: cookingArray
+            }, {
+            label: "Fishing",
+            backgroundColor: "rgb(47, 117, 198)",
+            borderColor: "rgb(47, 117, 198)",
+            data: fishingArray
+            }, {
+            label: "Gathering",
+            backgroundColor: "rgb(162, 198, 47)",
+            borderColor: "rgb(162, 198, 47)",
+            data: gatheringArray
+            }, {
+            label: "Mining",
+            backgroundColor: "rgb(109, 109, 109)",
+            borderColor: "rgb(109, 109, 109)",
+            data: miningArray
+            }, {
+            label: "Smithing",
+            backgroundColor: "rgb(40, 40, 40)",
+            borderColor: "rgb(40, 40, 40)",
+            data: smithingArray
+            }, {
+            label: "Speed",
+            backgroundColor: "rgb(198, 47, 67)",
+            borderColor: "rgb(198, 47, 67)",
+            data: speedArray
+            }, {
+            label: "Tailoring",
+            backgroundColor: "rgb(198, 117, 47)",
+            borderColor: "rgb(198, 117, 47)",
+            data: tailoringArray
+            }, {
+            label: "Woodcutting",
+            backgroundColor: "rgb(102, 56, 16)",
+            borderColor: "rgb(102, 56, 16)",
+            data: woodcuttingArray
+            }
+        ]
+    };
+    console.log(typeof(AllChart) );
+
+    //update chart data if already created
+    if (typeof(AllChart) == "object") {
+        console.log("ALF!!!")
+        AllChart.config.data  = data;
+        AllChart.update();
+    } else {
+        AllChart = new Chart(ctx, {
+            type: 'bar',
+            data: data,
+            options: {
+                scales: {
+                    xAxes: [{stacked: true, ticks: {autoSkip: false}}],
+                    yAxes: [{stacked: true}]
+                }
+            }
+        });
+    }  
+    //console.log(typeof(AllChart.config.data.datasets));
 }
 
 
 
+
+
+
+
+
+
+
+
+
 // -------------- { functions } -----------------
+
+//Parses all characters out of data input and creates new character objects
 var fn_ParseAllCharacters = function(para_InputJSON:any) {
-    var returnArray = []; //???
+    var returnArray:any[] = []; //???
     var shortlist_characters:string[] = [];
 
     //loop each set of data (alchemy, cooking, etc)
@@ -316,11 +331,10 @@ var fn_ParseAllCharacters = function(para_InputJSON:any) {
             } else {
                 var Guild = "Guildless";
             }
-
+            //index the current character
             var searchableplayername:string = playername.toLowerCase();
-            
-
             var selectedchar:number = shortlist_characters.indexOf(searchableplayername);
+
             if (selectedchar == -1) {
                 var newchar = new Character(playername, Guild);
                 shortlist_characters.push(searchableplayername);
@@ -370,7 +384,6 @@ var fn_ParseAllCharacters = function(para_InputJSON:any) {
                         returnArray[selectedchar]._woodcutting = gains;
                         break;
                 }
-
             }
         }
     }
@@ -379,8 +392,7 @@ return returnArray;
 }
 
 
-
-
+//Makes shortlist of all guilds in data input
 var fn_ParseAllGuildNames = function(para_InputJSON:any) {
     var guild_shortlist:string[] = [];
     var Guild:string;
@@ -408,6 +420,8 @@ var fn_ParseAllGuildNames = function(para_InputJSON:any) {
     return guild_shortlist;
 }
 
+
+//Makes shortlist of all characters in data input
 var fn_ParseAllCharacterNames = function(para_InputJSON:any) {
     //retrieve data out of json sets
     var character_shortlist:string[] = [];
@@ -428,4 +442,39 @@ var fn_ParseAllCharacterNames = function(para_InputJSON:any) {
         }
     }
     return character_shortlist;
+}
+
+
+//Select a RGB color for input
+var fn_MakeRGB = function(para_Input:string, para_Guild:string = "alf") {
+    var Goon_Guilds:string[] = ["(NaCl)","(cone?)","(Pepsi.)","(****)","(:coal:)","(MULTIS)","(YAMS)","(goose)","(~worms~)","(cone)","(GOONS)"];
+    if (Goon_Guilds.indexOf(para_Guild) != -1) {
+        return "rgba(0,0,0,";
+    }
+    return "rgba(" + para_Input[0] + "," + para_Input[1] + "," + para_Input[2] + ",";
+}
+
+
+//inString function
+var fn_InStr = function(para_String:string, para_needle:string) {
+	var Output = para_String.indexOf(para_needle);
+	if (Output === -1) {
+		return false;
+	} else {
+		return true;
+	}
+}
+
+
+//Split a string to an array
+var fn_SplitString = function(para_input:string, para_delimiter:string) {
+  para_input = "" + para_input;
+  var returnval:string[] = para_input.split(para_delimiter);
+  return returnval;
+};
+
+
+//Capitalize first character of input string. Better than messing with the string prototype
+function fn_CapitalizeFirstChar(string:string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }

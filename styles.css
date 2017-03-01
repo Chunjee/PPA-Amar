@@ -57,6 +57,10 @@ img {
   right: 0;
   line-height: 2rem;
   text-align: center;
-  color: #f7f7f7;
+  color: #d3d3d3;
   background-color: #222222;
+}
+
+#nodefaultlink {
+  color: #d3d3d3;
 }

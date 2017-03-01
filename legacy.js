@@ -178,7 +178,7 @@ $("#GO").on("click", function () {
     combatreduce = $("#combatreduce").val();
     console.log("User entered: " + userInput);
     //Split up user input into an array
-    var userinput_array = fn_Splitfile(userInput, delimiter);
+    var userinput_array = fn_SplitString(userInput, delimiter);
     //if one of the user inputs is "all"
     if (userinput_array.indexOf("all") != -1) {
         //clear all user input and replace with every guild
@@ -224,7 +224,7 @@ $("#CharacterButton").on( "click", function() {
     console.log("User entered: " + userInput);
     
     //Split up user input into an array
-    var userinput_array = fn_Splitfile(userInput , delimiter);
+    var userinput_array = fn_SplitString(userInput , delimiter);
     
     
     var myRegEx = /\(/g;
@@ -402,7 +402,7 @@ function fn_GetAllGuildMembers(para_InputJSON,para_GuildName) {
 //MAIN
 function Fn_Main(para_ExternalData) {
     //split the file into each JSON section. separated by /newline
-    AllData = fn_Splitfile(para_ExternalData, "\n");
+    AllData = fn_SplitString(para_ExternalData, "\n");
     console.log("Lines in datafile : " + AllData.length);
     //iterate over each highscore page
     for (var i = AllData.length - 1; i >= 0; i--) {
@@ -467,7 +467,7 @@ function fn_buildalldata(para_InputJSON) {
                 sentdate = true;
                 var d = new Date(HighScoreSet.result.timestamp);
                 d = d.toLocaleString();
-                d = fn_Splitfile(d, ",");
+                d = fn_SplitString(d, ",");
                 $("#date").replaceWith("<span>" + d[0] + "</span>");
             }
             //grab guild name
@@ -513,7 +513,7 @@ function fn_FindAllGuilds(para_InputJSON) {
                 sentdate = true;
                 var d = new Date(HighScoreSet.result.timestamp);
                 d = d.toLocaleString();
-                d = fn_Splitfile(d, ",");
+                d = fn_SplitString(d, ",");
                 $("#date").replaceWith("<span>" + d[0] + "</span>");
             }
             //grab guild name
@@ -636,57 +636,3 @@ function fn_BuildOneChartDataSet(para_InputJSON, para_GuildName) {
     return dataset;
 }
 ;
-function fn_MakeRGB(para_Input, para_Guild) {
-    if (para_Guild === void 0) { para_Guild = "alf"; }
-    //"rgba(3,3,3,1)"
-    var Goon_Guilds = ["(cone?)", "(Pepsi.)", "(****)", "(:coal:)", "(MULTIS)", "(YAMS)", "(goose)", "(~worms~)", "(cone)", "(GOONS)"];
-    if (Goon_Guilds.indexOf(para_Guild) != -1) {
-        return "rgba(0,0,0,";
-    }
-    return "rgba(" + para_Input[0] + "," + para_Input[1] + "," + para_Input[2] + ",";
-}
-;
-function fn_Splitfile(para_input, para_delimiter) {
-    //takes a string, returns array
-    para_input = "" + para_input;
-    var res = para_input.split(para_delimiter);
-    return res;
-}
-;
-function fn_CapitalizeFirstChar(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
-function fn_InStr(para_String, para_needle) {
-    var Output = para_String.indexOf(para_needle);
-    if (Output === -1) {
-        return 0;
-    }
-    else {
-        return 1;
-    }
-}
-//DEPRECIATED
-/*
-function fn_FindAllGuilds_OLD(para_InputJSON) {
-    //loop each set of data
-    for (var i = para_InputJSON.length - 1; i >= 0; i--) {
-        //put each set of json into
-        var HighScoreSet = JSON.parse(para_InputJSON[i]);
-    }
-    var guild_array = [];
-    var Guild;
-
-    for (var x = HighScoreSet.result.extractorData.data["0"].group.length - 1; x >= 0; x--) {
-        if (HighScoreSet.result.extractorData.data["0"].group[x].Guild) {
-            Guild = HighScoreSet.result.extractorData.data["0"].group[x].Guild["0"].text;
-        } else {
-            Guild = "Guildless";
-        }
-        
-        if (-1 == guild_array.indexOf(Guild)) {
-            guild_array.push(Guild)
-        }
-    }
-    return guild_array;
-}
-*/ 

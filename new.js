@@ -58,7 +58,7 @@ var smithingArray = [];
 var speedArray = [];
 var tailoringArray = [];
 var woodcuttingArray = [];
-// -------------- { MAIN } -----------------
+// -------------- { MAIN } ----------------- //
 $(document).ready((function () {
     "use strict";
     //Register buttons with functionality
@@ -81,9 +81,11 @@ $(document).ready((function () {
         fn_AllChart();
     });
 }));
+// -------------- { TOP FUNCTIONS } ----------------- //
+//Accepts JSON data and sends it to all relevent functions
 var Fn_TSMain = function (para_data) {
     //split the file into each JSON section. separated by /newline
-    AllData = fn_Splitfile(para_data, "\n");
+    AllData = fn_SplitString(para_data, "\n");
     console.log("Lines in datafile : " + AllData.length);
     //iterate over each highscore page
     for (var i = AllData.length - 1; i >= 0; i--) {
@@ -106,6 +108,7 @@ var Fn_TSMain = function (para_data) {
     //Sort characters from smallest to largest
     the_charactersobject = _.sortBy(the_charactersobject, "_total");
 };
+//Accepts user input for ALLCHART
 var fn_AllChart = function () {
     //grab users input
     var delimiter = "|";
@@ -114,7 +117,7 @@ var fn_AllChart = function () {
     //lowercase user input for less friction
     userInput = userInput.toLowerCase();
     //Split up user input into an array
-    var userinput_array = fn_Splitfile(userInput, delimiter);
+    var userinput_array = fn_SplitString(userInput, delimiter);
     var thisSet = [];
     labels = [];
     //GUILD handling //var myRegEx = /\(/g;
@@ -251,6 +254,7 @@ var fn_AllChart = function () {
     //console.log(typeof(AllChart.config.data.datasets));
 };
 // -------------- { functions } -----------------
+//Parses all characters out of data input and creates new character objects
 var fn_ParseAllCharacters = function (para_InputJSON) {
     var returnArray = []; //???
     var shortlist_characters = [];
@@ -273,6 +277,7 @@ var fn_ParseAllCharacters = function (para_InputJSON) {
             else {
                 var Guild = "Guildless";
             }
+            //index the current character
             var searchableplayername = playername.toLowerCase();
             var selectedchar = shortlist_characters.indexOf(searchableplayername);
             if (selectedchar == -1) {
@@ -330,6 +335,7 @@ var fn_ParseAllCharacters = function (para_InputJSON) {
     //console.log(returnArray);
     return returnArray;
 };
+//Makes shortlist of all guilds in data input
 var fn_ParseAllGuildNames = function (para_InputJSON) {
     var guild_shortlist = [];
     var Guild;
@@ -355,6 +361,7 @@ var fn_ParseAllGuildNames = function (para_InputJSON) {
     }
     return guild_shortlist;
 };
+//Makes shortlist of all characters in data input
 var fn_ParseAllCharacterNames = function (para_InputJSON) {
     //retrieve data out of json sets
     var character_shortlist = [];
@@ -373,3 +380,32 @@ var fn_ParseAllCharacterNames = function (para_InputJSON) {
     }
     return character_shortlist;
 };
+//Select a RGB color for input
+var fn_MakeRGB = function (para_Input, para_Guild) {
+    if (para_Guild === void 0) { para_Guild = "alf"; }
+    var Goon_Guilds = ["(NaCl)", "(cone?)", "(Pepsi.)", "(****)", "(:coal:)", "(MULTIS)", "(YAMS)", "(goose)", "(~worms~)", "(cone)", "(GOONS)"];
+    if (Goon_Guilds.indexOf(para_Guild) != -1) {
+        return "rgba(0,0,0,";
+    }
+    return "rgba(" + para_Input[0] + "," + para_Input[1] + "," + para_Input[2] + ",";
+};
+//inString function
+var fn_InStr = function (para_String, para_needle) {
+    var Output = para_String.indexOf(para_needle);
+    if (Output === -1) {
+        return false;
+    }
+    else {
+        return true;
+    }
+};
+//Split a string to an array
+var fn_SplitString = function (para_input, para_delimiter) {
+    para_input = "" + para_input;
+    var returnval = para_input.split(para_delimiter);
+    return returnval;
+};
+//Capitalize first character of input string. Better than messing with the string prototype
+function fn_CapitalizeFirstChar(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
