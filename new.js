@@ -356,6 +356,7 @@ var fn_ParseAllGuildNames = function (para_InputJSON) {
                 guild_shortlist.push(Guild);
             }
             else {
+                //do nothing
             }
         }
     }

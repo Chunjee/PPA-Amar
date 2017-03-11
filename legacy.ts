@@ -104,7 +104,8 @@ String.prototype.replaceAll = function(search, replacement) {
 
 //Create Progress Pie Chart(s)
 var progressChart = document.getElementById('progressChart1'),
-    progressctx = progressChart.getContext('2d');
+    progressctx = progressChart.getContext('2d'),
+    progressdata = [];
 var progressChart = new Chart(progressctx, {
         type: 'doughnut',
         data: {
@@ -114,7 +115,7 @@ var progressChart = new Chart(progressctx, {
     ],
     datasets: [
         {
-            data: [99, 1],
+            data: [100, 0],
             backgroundColor: [
                 "#36A2EB",
                 "#FF6384"
@@ -132,7 +133,7 @@ var progressChart = new Chart(progressctx, {
         elements: {
             center: {
                 maxText: '100%',
-                text: '99%'
+                text: '0%'
             }
         }
 	}
@@ -149,7 +150,7 @@ var progressChart2 = new Chart(progressctx, {
     ],
     datasets: [
         {
-            data: [10, 90],
+            data: [50, 50],
             backgroundColor: [
                 "#36A2EB",
                 "#FF6384"
@@ -167,7 +168,7 @@ var progressChart2 = new Chart(progressctx, {
         elements: {
             center: {
                 maxText: '100%',
-                text: '10%'
+                text: '50%'
             }
         }
 	}
@@ -473,7 +474,7 @@ function Fn_Main(para_ExternalData) {
 
 function fn_AddEachGuild() {
     if (!chartdata.datasets) {
-        console.log("made into an array");
+        //console.log("made into an array");
         chartdata.datasets = [];
     }
     while (initial_allguilds.length >= 7) {
