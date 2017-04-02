@@ -446,8 +446,8 @@ var fn_ParseAllCharacterNames = function(para_InputJSON:any) {
 
 
 //Select a RGB color for input
-var fn_MakeRGB = function(para_Input:string, para_Guild:string = "alf") {
-    var Goon_Guilds:string[] = ["(NaCl)","(cone?)","(Pepsi.)","(****)","(:coal:)","(MULTIS)","(YAMS)","(goose)","(~worms~)","(cone)","(GOONS)"];
+var fn_MakeRGB = function(para_Input:number[], para_Guild:string = "alf") {
+    var Goon_Guilds:string[] = ["(EGGS)","(NaCl)","(cone?)","(Pepsi.)","(****)","(:coal:)","(MULTIS)","(YAMS)","(goose)","(~worms~)","(cone)","(GOONS)"];
     if (Goon_Guilds.indexOf(para_Guild) != -1) {
         return "rgba(0,0,0,";
     }
